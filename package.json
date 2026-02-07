@@ -1,0 +1,19 @@
+{
+  "name": "gluco6pressel-api",
+  "version": "1.0.0",
+  "description": "API REST para SaaS B2B têxtil",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.11.5",
+    "zod": "^3.23.8"
+  }
+}
