@@ -1,0 +1,34 @@
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  email VARCHAR(160) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(160) NOT NULL,
+  description TEXT NOT NULL,
+  price NUMERIC(12, 2) NOT NULL CHECK (price > 0),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS retailers (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(160) NOT NULL,
+  contact_email VARCHAR(160) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  id SERIAL PRIMARY KEY,
+  retailer_id INTEGER NOT NULL REFERENCES retailers(id) ON DELETE RESTRICT,
+  product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE RESTRICT,
+  quantity INTEGER NOT NULL CHECK (quantity > 0),
+  status VARCHAR(40) NOT NULL DEFAULT 'aberto',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_orders_retailer_id ON orders (retailer_id);
+CREATE INDEX IF NOT EXISTS idx_orders_product_id ON orders (product_id);
